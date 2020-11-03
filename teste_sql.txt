@@ -1,0 +1,30 @@
+Considerando o modelo ER fazer as seguintes ações:
+
+1 - Fazer uma consulta SQL que liste a quantidade de horas que 
+cada professor tem comprometido em aulas
+
+SELECT
+            P.nomeprof,
+            (SELECT
+                COUNT(H.numhoras)
+            FROM
+                HORARIO H
+            WHERE
+                H.coddept = P.coddept ) AS Quantidade_Horas
+        FROM
+            PROFESSOR P
+        GROUP BY
+            P.nomeprof;
+
+
+2 - Fazer uma consulta SQL que liste as salas com horários disponíveis 
+e quais são estes horários que estão a disposição. 
+(Considerar que as salas poderiam ser ocupadas 24 horas por dia, 
+todos os dias da semana)
+
+SELECT s.numsula AS numero_sala, h.horainicio AS horas_disponiveis
+    FROM SALA as s
+    LEFT JOIN HORARIO as h
+                    on s.numsala = h.numsala
+    WHERE h.horainicio EXISTS;
+
